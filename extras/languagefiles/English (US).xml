@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<language name="English (US)" vbversion="4.1.3" product="enhanced_jabber" type="phrases">
+		<phrasetype name="Control Panel Options" fieldname="cpoption">
+			<phrase name="jabber_nosecurity" date="1197910778" username="Sebijk" version="1.01"><![CDATA[No Encryption]]></phrase>
+			<phrase name="jabber_ssl" date="1197910871" username="Sebijk" version="1.01"><![CDATA[Use SSL]]></phrase>
+			<phrase name="jabber_tabdisabled" date="1221866738" username="Sebijk" version="1.23 Beta 1"><![CDATA[Disabled]]></phrase>
+			<phrase name="jabber_tabfirst" date="1210705504" username="Sebijk" version="1.22 Beta 3"><![CDATA[Left]]></phrase>
+			<phrase name="jabber_tablast" date="1210705529" username="Sebijk" version="1.22 Beta 3"><![CDATA[Right]]></phrase>
+			<phrase name="jabber_tls" date="1197910906" username="Sebijk" version="1.01"><![CDATA[Use TLS]]></phrase>
+			<phrase name="jabber_class_floele" date="1224100608" username="Sebijk" version="1.23 Beta 4"><![CDATA[floele]]></phrase>
+			<phrase name="jabber_class_xmpphp" date="1224100608" username="Sebijk" version="1.23 Beta 4"><![CDATA[xmpphp]]></phrase>
+			<phrase name="jabber_iso_8859_1" date="1224790373" username="Sebijk" version="1.23 Beta 6"><![CDATA[ISO-8859-1]]></phrase>
+			<phrase name="jabber_utf_8" date="1224790304" username="Sebijk" version="1.23 Beta 6"><![CDATA[UTF-8]]></phrase>
+		</phrasetype>
+		<phrasetype name="Kontrollzentrum: Benutzer-Verwaltung" fieldname="cpuser">
+			<phrase name="display_jabber_id" date="1210634705" username="Sebijk" version="1.22 Beta 1"><![CDATA[Display Jabber ID]]></phrase>
+			<phrase name="jabber_id" date="1210634705" username="Sebijk" version="1.22 Beta 1"><![CDATA[Jabber ID]]></phrase>
+		</phrasetype>
+		<phrasetype name="Scheduled Tasks" fieldname="cron">
+			<phrase name="task_jabber_birthday_desc" date="1197911346" username="Sebijk" version="1.01"><![CDATA[Sending Birthday wishes via Jabber to users birthday.]]></phrase>
+			<phrase name="task_jabber_birthday_log" date="1197911346" username="Sebijk" version="1.01"><![CDATA[Sent Birthday wishes to: {1}]]></phrase>
+			<phrase name="task_jabber_birthday_title" date="1197911346" username="Sebijk" version="1.01"><![CDATA[Birthday via Jabber]]></phrase>
+			<phrase name="task_jabber_digestdaily_desc" date="1224792953" username="Sebijk" version="1.23 Beta 6"><![CDATA[This script sends out new post and new thread digests once per day via Jabber.]]></phrase>
+			<phrase name="task_jabber_digestdaily_log" date="1224792953" username="Sebijk" version="1.23 Beta 6"><![CDATA[Daily Digest Sent via Jabber]]></phrase>
+			<phrase name="task_jabber_digestdaily_title" date="1224792953" username="Sebijk" version="1.23 Beta 6"><![CDATA[Daily Digest (Jabber)]]></phrase>
+			<phrase name="task_jabber_digestweekly_desc" date="1224756252" username="Sebijk" version="1.23 Beta 6"><![CDATA[This script sends out new post and new thread digests once per week via Jabber.]]></phrase>
+			<phrase name="task_jabber_digestweekly_log" date="1224756252" username="Sebijk" version="1.23 Beta 6"><![CDATA[Weekly Digest Sent via Jabber]]></phrase>
+			<phrase name="task_jabber_digestweekly_title" date="1224756252" username="Sebijk" version="1.23 Beta 6"><![CDATA[Weekly Digest (Jabber)]]></phrase>
+			<phrase name="task_jabber_reminder_desc" date="1198749538" username="Sebijk" version="1.20 Beta 3"><![CDATA[This script will send reminders via Jabber every 30 minutes of Calendar Events.]]></phrase>
+			<phrase name="task_jabber_reminder_log" date="1198749538" username="Sebijk" version="1.20 Beta 3"><![CDATA[Reminder (via Jabber) sent to: {1}]]></phrase>
+			<phrase name="task_jabber_reminder_title" date="1198749538" username="Sebijk" version="1.20 Beta 3"><![CDATA[Calendar Reminder (Jabber)]]></phrase>
+			<phrase name="task_jabber_subscriptions_desc" date="1210614966" username="Sebijk" version="1.22 Beta 1"><![CDATA[Once per day, this script sends out reminders about soon to expire subscriptions via Jabber.]]></phrase>
+			<phrase name="task_jabber_subscriptions_log" date="1210614966" username="Sebijk" version="1.22 Beta 1"><![CDATA[Paid Subscriptions Reminders via Jabber sent]]></phrase>
+			<phrase name="task_jabber_subscriptions_title" date="1210614966" username="Sebijk" version="1.22 Beta 1"><![CDATA[Jabber Subscriptions]]></phrase>
+		</phrasetype>
+		<phrasetype name="E-Mail: Text" fieldname="emailbody">
+			<phrase name="sendjabbermessage" date="1221939271" username="Sebijk" version="1.23 Beta 2"><![CDATA[Hello $jabber_to,
+
+$jabber_from sent you a message via the Jabber Form:
+************
+$jabber_message
+************
+
+E-Mail-Address of $jabber_from: $emailaddress
+
+$vboptions[bbtitle] cannot be held responsible for the content of the message, that users have sent via the Forum.
+
+Yours sincerely
+
+$vboptions[bbtitle]]]></phrase>
+		</phrasetype>
+		<phrasetype name="E-Mail: Betreff" fieldname="emailsubject">
+			<phrase name="sendjabbermessage" date="1224791050" username="Sebijk" version="1.23 Beta 6"><![CDATA[You have received a Message from $jabber_from]]></phrase>
+		</phrasetype>
+		<phrasetype name="Fehlermeldungen" fieldname="error">
+			<phrase name="badjabber" date="1221919672" username="Sebijk" version="1.23 Beta 2"><![CDATA[You entered an invalid Jabber ID. Please correct this.<p /> <a href="profile.php?do=editprofile">Go Back</a>]]></phrase>
+		</phrasetype>
+		<phrasetype name="GLOBAL" fieldname="global">
+			<phrase name="jabber_message_was_sent" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Your Jabber Message was sent.]]></phrase>
+			<phrase name="send_jabber_message_to_x" date="1210689455" username="Sebijk" version="1.22 Beta 3"><![CDATA[Send a Jabber message to {1}]]></phrase>
+			<phrase name="send_message_via_jabber_to_x" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Send Message via Jabber to {1}]]></phrase>
+		</phrasetype>
+		<phrasetype name="Messaging" fieldname="messaging">
+			<phrase name="jabber" date="0" username="" version=""><![CDATA[Jabber]]></phrase>
+			<phrase name="more_functions_via_jabber_client" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[More Jabber Functions via Jabber Client:]]></phrase>
+			<phrase name="search_servicediscovery_from_x" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Search Service Discovery from {1}]]></phrase>
+			<phrase name="send_message_via_jabber_to_x_link" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Send Message via Jabber to <a href="{1}" target="_blank"><strong>{2}</strong></a>]]></phrase>
+			<phrase name="send_xmpp_file_to_user_x" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Send a File to {1}]]></phrase>
+			<phrase name="send_xmpp_message_to_user_x" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Sending a Message to {1}]]></phrase>
+			<phrase name="show_adhoc_commands_for_x" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Show Ad-Hoc Commands for {1}]]></phrase>
+			<phrase name="show_xmpp_user_x_infos" date="1210634651" username="Sebijk" version="1.22 Beta 1"><![CDATA[Show Profile Informations from {1}]]></phrase>
+			<phrase name="these_functions_require_jabber" date="1223997019" username="Sebijk" version="1.23 Beta 3"><![CDATA[Please note that these functions require that you actually have a <a href="http://www.jabber.org/web/Clients">Jabber client</a> application installed on your computer.]]></phrase>
+		</phrasetype>
+		<phrasetype name="Benutzer-Tools (global)" fieldname="user">
+			<phrase name="jabber_id" date="0" username="" version=""><![CDATA[Jabber ID]]></phrase>
+		</phrasetype>
+		<phrasetype name="vBulletin-Einstellungen" fieldname="vbsettings">
+			<phrase name="setting_jabber_canguestsendmessage_desc" date="1210628804" username="Sebijk" version="1.22 Beta 1"><![CDATA[If you want to prevent Guests from sending Jabber Messages, then you should disable this. This function requires, that Jabber Messages are enabled on the Forum.]]></phrase>
+			<phrase name="setting_jabber_canguestsendmessage_title" date="1210628804" username="Sebijk" version="1.22 Beta 1"><![CDATA[Allow Guests to send Jabber Messages:]]></phrase>
+			<phrase name="setting_jabber_encryption_desc" date="1218567730" username="Sebijk" version="1.22 Beta 4"><![CDATA[Should an encrypted connection to the Jabber Server be used? To use this option, you need to have a compiled PHP with <b>OpenSSL Support</b>, otherwise you can't use this function.]]></phrase>
+			<phrase name="setting_jabber_encryption_title" date="1218567730" username="Sebijk" version="1.22 Beta 4"><![CDATA[Secure connection:]]></phrase>
+			<phrase name="setting_jabber_hostname_desc" date="1197910472" username="Sebijk" version="1.01"><![CDATA[Please enter your Jabber Server Hostname.]]></phrase>
+			<phrase name="setting_jabber_hostname_title" date="1197910472" username="Sebijk" version="1.01"><![CDATA[Hostname:]]></phrase>
+			<phrase name="setting_jabber_jid_desc" date="1197910452" username="Sebijk" version="1.01"><![CDATA[Please enter your full Jabber ID here (ex. username@example.com):]]></phrase>
+			<phrase name="setting_jabber_jid_title" date="1197910452" username="Sebijk" version="1.01"><![CDATA[Jabber ID:]]></phrase>
+			<phrase name="setting_jabber_newpmnotification_desc" date="1224790540" username="Sebijk" version="1.23 Beta 6"><![CDATA[Should users be notified of new Private Messages via Jabber? (Only if they are accept Private Messages Notification via E-Mail.).]]></phrase>
+      <phrase name="setting_jabber_newpmnotification_title" date="1224790540" username="Sebijk" version="1.23 Beta 6"><![CDATA[Notify of new Private Messages via Jabber:]]></phrase>
+			<phrase name="setting_jabber_newpostnotification_desc" date="1218572131" username="Sebijk" version="1.22 Beta 4"><![CDATA[Should users be notified of new posts via Jabber? (Only if they are subscribed to a board or thread.).]]></phrase>
+			<phrase name="setting_jabber_newpostnotification_title" date="1218572131" username="Sebijk" version="1.22 Beta 4"><![CDATA[Notify of new posts via Jabber:]]></phrase>
+			<phrase name="setting_jabber_password_desc" date="1197910421" username="Sebijk" version="1.01"><![CDATA[Please enter your Jabber ID password:]]></phrase>
+			<phrase name="setting_jabber_password_title" date="1197910421" username="Sebijk" version="1.01"><![CDATA[Jabber Password:]]></phrase>
+			<phrase name="setting_jabber_port_desc" date="1218567685" username="Sebijk" version="1.22 Beta 4"><![CDATA[Please enter your Jabber Server Port. By default this is 5222.]]></phrase>
+			<phrase name="setting_jabber_port_title" date="1218567685" username="Sebijk" version="1.22 Beta 4"><![CDATA[Port Number:]]></phrase>
+			<phrase name="setting_jabber_selectcharset_desc" date="1224788159" username="Sebijk" version="1.23 Beta 5"><![CDATA[What Charset is your Forum running? This is important for sending Jabber Messages with special characters.]]></phrase>
+      <phrase name="setting_jabber_selectcharset_title" date="1224788159" username="Sebijk" version="1.23 Beta 5"><![CDATA[Choose Charset:]]></phrase>
+			<phrase name="setting_jabber_selectclass_desc" date="1218567787" username="Sebijk" version="1.22 Beta 4"><![CDATA[Here you can select the Jabber Class. If you use PHP 4 than select the Class from floele. If you use PHP 5 (64 bit must PHP 5.2.6), than select the xmpphp Class. Because it has more functions and is currently better. <b>Note: PHP 5 is needed for xmpphp.</b>]]></phrase>
+			<phrase name="setting_jabber_selectclass_title" date="1218567787" username="Sebijk" version="1.22 Beta 4"><![CDATA[Jabber Class Select:]]></phrase>
+			<phrase name="setting_jabber_sendmessageform_desc" date="1197911142" username="Sebijk" version="1.01"><![CDATA[May users send Jabber Messages directly via the Forum?]]></phrase>
+			<phrase name="setting_jabber_sendmessageform_title" date="1197911142" username="Sebijk" version="1.01"><![CDATA[Jabber Messages:]]></phrase>
+      <phrase name="setting_jabber_show_guest_desc" date="1224787200" username="Sebijk" version="1.23 Beta 5"><![CDATA[Do you want display the Jabber ID for Guests?<br /><b>ATTENTION: The Jabber ID will generally not show for Guests, if you disable Show User Profiles for Guests.</b>]]></phrase>
+			<phrase name="setting_jabber_show_guest_title" date="1224787200" username="Sebijk" version="1.23 Beta 5"><![CDATA[Show Jabber ID for Guests:]]></phrase>
+			<phrase name="setting_jabber_tabsorder_desc" date="1221866517" username="Sebijk" version="1.23 Beta 1"><![CDATA[Left or Right?]]></phrase>
+			<phrase name="setting_jabber_tabsorder_title" date="1221866517" username="Sebijk" version="1.23 Beta 1"><![CDATA[Jabber Tab:]]></phrase>
+			<phrase name="settinggroup_jabber_options" date="1210634469" username="Sebijk" version="1.22 Beta 1"><![CDATA[Jabber Options]]></phrase>
+		</phrasetype>
+		<phrasetype name="Wer ist online" fieldname="wol">
+			<phrase name="sending_jabber_message" date="1221939422" username="Sebijk" version="1.23 Beta 2"><![CDATA[Sending Jabber Message]]></phrase>
+		</phrasetype>
+</language>

@@ -1,0 +1,12 @@
+Jabber Integration
+================================================================================
+Version: 1.0.0
+URL: http://www.vbulletin.org/forum/showthread.php?t=179114
+
+1. Upload all files from Folder to your Forum Root.
+2. Import the Product product-enhanced_jabber.xml.
+3. Create a Jabber Account for your Forum.
+4. Put your Jabber Account Information in Settings -> Jabber Options.
+5. If you don't have TMS, read templateedits-enhanced_jabber.txt
+   for Template Changes
+6. Done!

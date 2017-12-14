@@ -1,0 +1,60 @@
+Erweiterte Jabber-Integration
+================================================================================
+Version: 1.23 RC 2
+URL: http://www.vbulletin-germany.org/showthread.php?t=1189
+
+Apply the following modifications to your Templates:
+
+
+Find the following Text in Template MEMBERINFO (Only vBulletin 3.7 & 3.8)
+--------------------------------------------------------------------------------
+<if condition="$prepared['skype']">
+						<li class="vbmenu_option"><img src="$stylevar[imgdir_misc]/im_skype.gif" alt="" class="alt2 inlineimg" /> <a href="#" dir="ltr" onclick="imwindow('skype', '$prepared[userid]', 400, 285); return false;"><phrase 1="$prepared[username]">$vbphrase[send_skype_message_to_x]</phrase></a></li>
+					</if>
+--------------------------------------------------------------------------------
+
+Below that, insert the following Text (Only vBulletin 3.7 & 3.8)
+--------------------------------------------------------------------------------
+<if condition="$show[member] OR $vboptions[jabber_show_guest] == '1'"><if condition="$userinfo['jabber']">
+						<li class="vbmenu_option"><img src="$stylevar[imgdir_misc]/im_jabber.png" alt="" class="alt2 inlineimg" /> <a href="#" dir="ltr" onclick="imwindow('jabber', '$prepared[userid]', 400, 285); return false;"><phrase 1="$prepared[username]">$vbphrase[send_jabber_message_to_x]</phrase></a></li>
+					</if>
+</if>
+--------------------------------------------------------------------------------
+
+
+
+Find the following Text in Template MEMBERINFO (Only vBulletin 3.6)
+--------------------------------------------------------------------------------
+<if condition="$userinfo['showskype']">
+<tr>
+<td>$userinfo[skypeicon]</td>
+<td><a href="#" dir="ltr" onclick="imwindow('skype', 
+'$userinfo[userid]', 400, 285); return false;">$userinfo[skype]</a></td>
+</tr>
+</if>
+--------------------------------------------------------------------------------
+
+Below that, insert the following Text (Only vBulletin 3.6)
+--------------------------------------------------------------------------------
+<if condition="$show[member] OR $vboptions[jabber_show_guest] == '1'">
+<if condition="$userinfo['showjabber']">
+<tr>
+<td>$userinfo[jabbericon]</td>
+<td><a href="#" onclick="imwindow('jabber', 
+'$userinfo[userid]', 470, 525)">$userinfo[jabber]</a></td>
+</tr>
+</if> 
+</if>
+--------------------------------------------------------------------------------
+
+
+
+Find the following Text in Template whosonlinebit
+--------------------------------------------------------------------------------
+$userinfo[aimicon]
+--------------------------------------------------------------------------------
+
+Above that, insert the following Text
+--------------------------------------------------------------------------------
+<if condition="$show[member] OR $vboptions[jabber_show_guest] == '1'">$userinfo[jabbericon]</if>
+--------------------------------------------------------------------------------

@@ -1,0 +1,20 @@
+Known Issues in Jabber Integration:
+
+Option: PM Notification and Unencrypted Connections have no function.
+
+
+Known Issues in PHP:
+
+xmpphp: TLS encrypted connections lock when more than a few k of data comes in without line breaks. 
+This happens on some servers when collecting vCards and the like. 
+This appears to be a PHP bug that I will file soon.
+
+PHP 5 64 Bit before Version 5.2.6:
+
+Problem: xmpphp Class make a Timout Error. 
+Solution: This is a GCC optimization Bug in PHP 5 64-Bit and fixed in Version 5.2.6.
+
+PHP 5.2.1 and 5.2.2:
+
+Problem: The SSL Connection at the Jabber Class from floele not work. 
+Solution: This is a render Bug in PHP 5.2.1 and 5.2.2 and fixed in 5.2.3 and later.

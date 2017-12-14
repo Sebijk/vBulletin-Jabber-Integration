@@ -1,0 +1,72 @@
+Jabber Integration
+================================================================================
+Version: 1.0.0 Beta 1
+URL: http://www.vbulletin-germany.org/showthread.php?t=1189
+
+Apply the following modifications to your Templates:
+
+Find the following Text in Template whosonlinebit
+--------------------------------------------------------------------------------
+{vb:raw userinfo.skypeicon}
+--------------------------------------------------------------------------------
+
+Below that, insert the following Text
+--------------------------------------------------------------------------------
+{vb:raw userinfo.jabbericon}
+--------------------------------------------------------------------------------
+
+
+
+Find the following Text in Template postbit
+--------------------------------------------------------------------------------
+{vb:raw post.icqicon}
+--------------------------------------------------------------------------------
+
+Above that, insert the following Text
+--------------------------------------------------------------------------------
+{vb:raw post.jabbericon}
+--------------------------------------------------------------------------------
+
+
+
+
+Find the following Text in Template memberlist_resultsbit
+--------------------------------------------------------------------------------
+{vb:raw userinfo.icqicon}
+--------------------------------------------------------------------------------
+
+Above that, insert the following Text
+--------------------------------------------------------------------------------
+{vb:raw userinfo.jabbericon}
+--------------------------------------------------------------------------------
+
+
+
+
+Find the following Text in Template modifyprofile
+--------------------------------------------------------------------------------
+<li>
+						<label for="skype">{vb:rawphrase skype_name}:</label>
+						<input type="text" class="primary textbox" id="skype" name="skype" value="{vb:raw bbuserinfo.skype}" maxlength="32" dir="ltr" tabindex="1" />
+					</li>
+--------------------------------------------------------------------------------
+
+Below that, insert the following Text
+--------------------------------------------------------------------------------
+<li>
+						<label for="jabber">{vb:rawphrase jabber_id}:</label>
+						<input type="text" class="primary textbox" id="jabber" name="jabber" value="{vb:raw bbuserinfo.jabber}" maxlength="32" dir="ltr" tabindex="1" />
+					</li>
+--------------------------------------------------------------------------------
+
+
+
+Find the following Text in Template postbit_legacy
+--------------------------------------------------------------------------------
+{vb:raw post.icqicon}
+--------------------------------------------------------------------------------
+
+Above that, insert the following Text
+--------------------------------------------------------------------------------
+{vb:raw post.jabbericon}
+--------------------------------------------------------------------------------

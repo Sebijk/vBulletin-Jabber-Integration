@@ -1,0 +1,105 @@
+Changes:
+
+Version 1.23 RC 4:
+
+* PHP 5.3 Compatibility Fixes for xmpphp
+* Bugfixes from Charles_1 included (Thanks to Charles_1)
+
+Version 1.23 RC 3:
+
+* PHP 5.3 Compatibility Fixes (vBulletin)
+* Updated xmpphp Class (SVN Rev 77)
+
+Version 1.23 RC 2:
+
+* Jabber PM Notification is automatically disabled if Vossis PM-Autoresponder 
+  is installed (I'm currently work for a complete fix)
+* Reduced Template Modifications, only 2 Template Edits is required, 
+  if TMS is not installed
+* Updated xmpphp Class (SVN Rev 76)
+
+
+Version 1.23 RC 1:
+
+* Some Template Modifications (TMS) changed to Template Hooks.
+  (Thanks to DragonMasterNYC for using some Code parts)
+* Updated xmpphp Class (SVN Rev 75)
+* PM Notifications via Jabber is not any more depended with the Setting:
+  Send E-Mail Notifications about new Private Messages
+  (useful, if you don't like double Messages)
+* Automatically Redirects, if a User sends a Jabber Message from a User Profile.
+
+
+Version 1.23 Beta 7:
+
+* Updated xmpphp Class (SVN Rev 73)
+* Fix a Bug in functions_jabber_digest.php (Thanks to Hapi)
+* Fix a Bug with the UFP (Thanks to Stoebi)
+
+Version 1.23 Beta 6:
+
+* Complete Notifications via Jabber
+(Weekly and Daily Notifications about new Threads and Posts)
+* Jabber Field now in Admin CP editable.
+* Notifications about new PMs integrated (Beta!)
+* UTF-8 no longer required (Thanks to Stoebi)
+* Fix Missing Template: im_send_jabber_complete_2 caching (Thanks to Stoebi)
+* Removed Auto Authorization Menu (because it is not implemented in Class yet)
+* Improved Instant Notifications about new Posts via Jabber
+* Add a Option to disable the Jabber ID for Guests
+
+Version 1.23 Beta 5:
+
+* Fix a Error in Jabber Popup Form
+* Add a Versions Check URL
+
+Version 1.23 Beta 4:
+
+* Replaced $_REQUEST Variables in $_GET and $_POST
+* Some codes located in external PHP Files (PHP 4 Compatibility)
+* Phrase these_functions_require_jabber updated (Jabber Clients Link)
+* Two Plugins in Hook sendmessage_start merged to one
+* Updated Jabber Class from floele (Is a file from Flyspray Project)
+* Updated xmpphp Class (SVN Rev 60)
+
+Version 1.23 Beta 3:
+* Small Error Fix at Sending Jabber Message
+
+Version 1.23 Beta 2 Patchlevel 1:
+* Updated Russian Translation (Thanks to zCarot)
+
+Version 1.23 Beta 2:
+
+* Add a Option to disable the Jabber Tab
+* Who's Online - Unknown location fixed (hopefully, Thanks to Andreas)
+* Jabber IM Field now show under Contact Information at 3.7 (Thanks to Andreas)
+* Add a Jabber ID Check at User CP
+* Updated xmpphp Class
+
+Version 1.23 Beta 1:
+* English Translation words Fixes
+* A new Class integrated from
+  http://code.google.com/p/xmpphp/.
+  This requires PHP 5!
+
+Version 1.22 Beta 4 Patchlevel 2:
+* Russian Translation included
+
+Version 1.22 Beta 4 Patchlevel 1:
+* Fully English Translation
+
+Version 1.22 Beta 4:
+
+* Initial English release
+* A Setting for Jabber Tab Order added
+
+Patrias Mod:
+
+Version 1.01
+
+* Who's Online - Unknown location fixed.
+* Postbit icon is not visible for guests anymore.
+
+Version 1.00
+
+* First Version

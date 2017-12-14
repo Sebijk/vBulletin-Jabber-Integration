@@ -1,0 +1,545 @@
+﻿<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<product productid="enhanced_jabber" active="1">
+	<title>Jabber-Integration</title>
+	<description>Adds Jabber to the Instant Messenger list and enhances vBulletin with Jabber Functions.</description>
+	<version>1.0.0 Beta 2</version>
+	<url>http://www.vbulletin-germany.org/showthread.php?t=1189</url>
+	<versioncheckurl>http://www.sebijk.com/productcheck/vbhacks/jabber_vb4.php</versioncheckurl>
+	<templateedits>
+		<templateedit template="modifyprofile" varname="jabber_im_modifyprofile" username="Sebijk" version="4.0.3" dateline="1301168645" searchorder="5" active="1">
+			<title>Jabber IM-Feld unter Profil aendern</title>
+			<searchstr><![CDATA[<li>
+						<label for="skype">{vb:rawphrase skype_name}:</label>
+						<input type="text" class="primary textbox" id="skype" name="skype" value="{vb:raw bbuserinfo.skype}" maxlength="32" dir="ltr" tabindex="1" />
+					</li>]]></searchstr>
+			<replacestr><![CDATA[<li>
+						<label for="skype">{vb:rawphrase skype_name}:</label>
+						<input type="text" class="primary textbox" id="skype" name="skype" value="{vb:raw bbuserinfo.skype}" maxlength="32" dir="ltr" tabindex="1" />
+					</li>
+<li>
+						<label for="jabber">{vb:rawphrase jabber_id}:</label>
+						<input type="text" class="primary textbox" id="jabber" name="jabber" value="{vb:raw bbuserinfo.jabber}" maxlength="32" dir="ltr" tabindex="1" />
+					</li>]]></replacestr>
+		</templateedit>
+		<templateedit template="whosonlinebit" varname="jabber_icon_wol" username="Sebijk" version="4.0.6" dateline="1301168726" searchorder="5" active="1">
+			<title>Jabber Symbol in der WOL-Liste anzeigen</title>
+			<searchstr>{vb:raw userinfo.skypeicon}</searchstr>
+			<replacestr>{vb:raw userinfo.skypeicon}
+{vb:raw userinfo.jabbericon}
+</replacestr>
+		</templateedit>
+		<templateedit template="postbit" varname="jabber_im_field_postbit" username="Sebijk" version="4.1.12" dateline="1301169857" searchorder="5" active="1">
+			<title>Jabber IM-Feld im Postbit</title>
+			<searchstr>{vb:raw post.icqicon}</searchstr>
+			<replacestr>{vb:raw post.jabbericon} 
+{vb:raw post.icqicon}</replacestr>
+		</templateedit>
+		<templateedit template="postbit_legacy" varname="jabber_im_postbit_legacy" username="Sebijk" version="4.1.12" dateline="1301169846" searchorder="5" active="1">
+			<title>Jabber IM-Feld im Postbit legacy</title>
+			<searchstr>{vb:raw post.icqicon}</searchstr>
+			<replacestr>{vb:raw post.jabbericon} 
+{vb:raw post.icqicon}</replacestr>
+		</templateedit>
+		<templateedit template="memberlist_resultsbit" varname="jabber_im_memberlist" username="Sebijk" version="4.1.8 Beta 1" dateline="1304166095" searchorder="5" active="1">
+			<title>Jabber IM-Feld in Mitgliederliste</title>
+			<searchstr>{vb:raw userinfo.icqicon}</searchstr>
+			<replacestr>{vb:raw userinfo.jabbericon} 
+{vb:raw userinfo.icqicon}</replacestr>
+		</templateedit>
+	</templateedits>
+	<dependencies>
+		<dependency dependencytype="vbulletin" minversion="4.0.0" maxversion="" />
+	</dependencies>
+	<codes>
+		<code version="*">
+			<installcode><![CDATA[if ($vbulletin->products['tms'])
+{
+	require_once(DIR . '/includes/adminfunctions_templateedits.php');
+	install_templateedits($info, $arr, $active);
+}
+if (!field_exists('user', 'jabber')) {
+	$db->query_write("ALTER TABLE " . TABLE_PREFIX . "user ADD jabber VARCHAR( 250 ) AFTER msn");
+}
+function field_exists($table, $field)
+{
+	global $db;
+	return ($db->num_rows($db->query_read("SHOW COLUMNS FROM `" . TABLE_PREFIX .$table."` LIKE '".$field."'"))> 0);
+}]]></installcode>
+			<uninstallcode><![CDATA[if ($vbulletin->products['tms'])
+{
+	require_once(DIR . '/includes/adminfunctions_templateedits.php');
+	uninstall_templateedits($vbulletin->GPC['productid']);
+}
+$db->query_write("ALTER TABLE " . TABLE_PREFIX . "user DROP jabber") ;]]></uninstallcode>
+		</code>
+	</codes>
+	<templates>
+		<template name="im_jabber" templatetype="template" date="1298719354" username="Sebijk" version="1.0.0 Beta 2"><![CDATA[<a href="javascript://" onclick="imwindow('jabber', '{vb:raw userinfo.userid}', 470, 525); return false;"><img src="{vb:stylevar imgdir_misc}/im_jabber.png" alt="{vb:rawphrase send_message_via_jabber_to_x, {vb:raw userinfo.username}}" /></a>]]></template>
+		<template name="im_send_jabber" templatetype="template" date="1338282229" username="Sebijk" version="1.0.0 Beta 2"><![CDATA[<form action="sendmessage.php" method="post" name="sendjabbermessage" id="sendjabbermessage">
+<div class="block">
+	<div class="blockhead">
+		<span class="blocksubhead_info"><a class="textcontrol normal" href="#" onclick="self.close()">{vb:rawphrase close_this_window}</a></span>
+		<h2>{vb:rawphrase jabber}</h2>
+	</div>
+	<div class="blockbody">
+		<div class="blockrow">
+			<img src="{vb:stylevar imgdir_misc}/im_jabber.png" alt="" />
+			{vb:rawphrase send_message_via_jabber_to_x_link, {vb:link member {vb:raw userinfo}}, {vb:raw userinfo.username}} (<strong dir="ltr">{vb:raw userinfo.jabber}</strong>)
+		</div>
+<vb:if condition="$vboptions['jabber_sendmessageform'] AND $vboptions['jabber_jid']">
+		<div class="blockrow">
+			{vb:rawphrase from}:<br />
+			<vb:if condition="$show['guest']"><input type="text" class="bginput" name="from" value="{vb:raw bbuserinfo.username}" tabindex="1" /><vb:else /><input type="hidden" name="from" value="{vb:raw bbuserinfo.username}" dir="ltr" />{vb:raw bbuserinfo.username}</vb:if>
+		</div>
+		<div class="blockrow">
+			{vb:rawphrase email_address}:<br />
+			<vb:if condition="$show['guest']"><input type="text" class="bginput" name="fromemail" value="{vb:raw bbuserinfo.email}" dir="ltr" tabindex="1" /><vb:else /><input type="hidden" name="fromemail" value="{vb:raw bbuserinfo.email}" dir="ltr" />{vb:raw bbuserinfo.email}</vb:if>
+		</div>
+		<div class="blockrow">
+			{vb:rawphrase message}:<br />
+			<textarea name="body" cols="50" rows="12" tabindex="1"></textarea>
+		</div>
+			<div class="blockrow"><input type="hidden" name="subject" value="{vb:rawphrase from_webpager_panel}" />
+			<input type="hidden" name="to" value="{vb:raw userinfo.jabber}" />
+			<input type="hidden" name="do" value="sendjabbermessage" />
+			<input type="hidden" name="s" value="{vb:raw session.sessionhash}" />
+			<input type="hidden" name="securitytoken" value="{vb:raw bbuserinfo.securitytoken}" />
+			<input type="submit" class="button" value="{vb:rawphrase send_message}" tabindex="1" />
+		</div>
+</vb:if>
+		<div class="blockrow">
+			{vb:rawphrase more_functions_via_jabber_client}<br />
+					<a href="xmpp:{vb:raw userinfo.jabber}">{vb:rawphrase send_xmpp_message_to_user_x, {vb:raw userinfo.jabber}}</a><br />
+		<a href="xmpp:{vb:raw userinfo.jabber}?sendfile">{vb:rawphrase send_xmpp_file_to_user_x, {vb:raw userinfo.jabber}}</a><br />
+		<a href="xmpp:{vb:raw userinfo.jabber}?vcard">{vb:rawphrase show_xmpp_user_x_infos, {vb:raw userinfo.jabber}}</a><br />
+		<a href="xmpp:{vb:raw userinfo.jabber}?command">{vb:rawphrase show_adhoc_commands_for_x, {vb:raw userinfo.jabber}}</a><br />
+		<a href="xmpp:{vb:raw userinfo.jabber}?disco">{vb:rawphrase search_servicediscovery_from_x, {vb:raw userinfo.jabber}}</a><br />
+<br />{vb:rawphrase these_functions_require_jabber}
+		</div>
+	</div>
+	<div class="blockfoot"></div>
+</div>
+</form>]]></template>
+		<template name="im_send_jabber_complete" templatetype="template" date="1338284672" username="Sebijk" version="1.0.0 Beta 2"><![CDATA[<div class="block">
+	<div class="blockhead">
+		<span class="blocksubhead_info"><a class="textcontrol normal" href="#" onclick="self.close()">{vb:rawphrase close_this_window}</a></span>
+		<h2>{vb:rawphrase jabber}</h2>
+	</div>
+	<div class="blockbody">
+		<div class="blockrow">
+		<div class="fieldset">{vb:rawphrase  jabber_message_was_sent}</div>
+		<div class="fieldset"><a href="javascript:history.go(-1)">{vb:rawphrase go_back}</a>
+		</div>
+		
+		</div>
+	</div>
+	</td>
+</tr>
+</table>]]></template>
+	</templates>
+	<stylevardfns>
+	</stylevardfns>
+	<stylevars>
+	</stylevars>
+	<plugins>
+		<plugin active="1" executionorder="5">
+			<title>Jabber Integration Template Cache</title>
+			<hookname>cache_templates</hookname>
+			<phpcode><![CDATA[$cache[] = 'im_jabber';
+$cache[] = 'im_send_jabber';
+$cache[] = 'im_send_jabber_complete';
+$cache[] = 'im_send_jabber_complete_2';]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>Member Profile: Add Jabber Tab</title>
+			<hookname>member_build_blocks_start</hookname>
+			<phpcode><![CDATA[if($vbulletin->options['jabber_tabsorder'] != 2) {
+require_once(DIR . '/includes/class_profileblock_jabber.php');
+if(!$vbulletin->userinfo['userid'] AND !$vbulletin->options['jabber_canguestsendmessage']) unset($vbulletin->options['jabber_sendmessageform']);
+if($vbulletin->options['jabber_tabsorder'] == 1) $jabber_hooklocation = 'profile_tabs_last';
+else $jabber_hooklocation = 'profile_tabs_first';
+$blocklist['jabber'] = array(
+    'class' => 'Jabber',
+    'title' => $vbphrase['jabber'],
+    'hook_location' => $jabber_hooklocation
+);
+
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="1">
+			<title>Show Jabber IM Field at Contact Information</title>
+			<hookname>member_profileblock_fetch_unwrapped</hookname>
+			<phpcode><![CDATA[if ($id == 'contactinfo' AND $userinfo['jabber'] != '' AND $this->registry->userinfo['userid'] OR $this->registry->options['jabber_show_guest'] == 1)
+{
+    $imusername = $this->profile->userinfo['jabber'];
+    //eval('$imicon = "' . fetch_template('') . '";');
+    $prepared['hasimicons'] = true;
+    $prepared['hasimdetails'] = true;
+    $templater = vB_Template::create('memberinfo_imbit');
+					$templater->register('imicon', $this->profile->userinfo["jabbericon"]);
+					$templater->register('imserviceid', "jabber");
+					$templater->register('imtitle', $vbphrase['jabber']);
+					$templater->register('imusername', $userinfo['username']);
+					$templater->register('userinfo', $userinfo);
+				$imbits .= $templater->render();
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>Jabber New Post Notification (Send Message)</title>
+			<hookname>newpost_notification_message</hookname>
+			<phpcode><![CDATA[if (!empty($touser['jabber']) AND $vbulletin->options['jabber_newpostnotification'] AND $vbulletin->options['jabber_password'] AND $vbulletin->options['jabber_port'] AND $vbulletin->options['jabber_hostname'])
+		{ // instant notification by Jabber
+			eval(iif(empty($evalemail["$touser[languageid]"]), $evalemail["-1"], $evalemail["$touser[languageid]"]));
+if($vbulletin->options['jabber_selectcharset'] == 1) {
+           $message = utf8_encode($message);
+           $subject = utf8_encode($subject);
+} 
+// xmpphp
+  $jabber_class->message($touser['jabber'], $message, "chat", $subject);
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>Jabber New Post Notification (Start)</title>
+			<hookname>newpost_notification_start</hookname>
+			<phpcode><![CDATA[if ($vbulletin->options['jabber_newpostnotification'] AND $vbulletin->options['jabber_password'] AND $vbulletin->options['jabber_port'] AND $vbulletin->options['jabber_hostname']) {
+require_once(DIR. '/includes/jabber_classes.php');
+require_once(DIR. '/includes/start.jabber.php');
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="1">
+			<title>Jabber Online Location Process</title>
+			<hookname>online_location_preprocess</hookname>
+			<phpcode><![CDATA[if($filename=='sendmessage.php' and $values['type']=='jabber') {
+   $userinfo['activity'] = 'jabber';
+}
+if($filename=='sendmessage.php' and $values['do']=='sendjabbermessage') {
+   $userinfo['activity'] = 'jabber';
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="1">
+			<title>Jabber Online Location</title>
+			<hookname>online_location_unknown</hookname>
+			<phpcode><![CDATA[if($userinfo['activity']=='jabber') 
+{
+$userinfo['action']=$vbphrase['sending_jabber_message'];
+$userinfo['where']='';
+$handled=true;
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title><![CDATA[Show Jabber Field in Who's Online List]]></title>
+			<hookname>online_query</hookname>
+			<phpcode><![CDATA[$hook_query_fields .= ", user.jabber";]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>Jabber Integration Profile and Postbit</title>
+			<hookname>postbit_imicons</hookname>
+			<phpcode><![CDATA[//if($userinfo['jabber'] != '' AND ($vbulletin->userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['canviewmembers']))
+if ($userinfo['jabber'] != '' AND ($vbulletin->options['showimicons'] OR $ignore_off_setting))
+	{
+		$templater = vB_Template::create('im_jabber');
+				$templater->register('userinfo', $userinfo);
+		$userinfo['jabbericon'] = $templater->render();
+		$userinfo['showjabber'] = true;
+		$show['hasimicons'] = true;
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>Add Jabber Integration to Profile</title>
+			<hookname>profile_updateprofile</hookname>
+			<phpcode><![CDATA[$vbulletin->input->clean_gpc('p', 'jabber', TYPE_STR); 
+if ($vbulletin->GPC['jabber'] == '' OR $userdata->verify_email($vbulletin->GPC['jabber']))
+	{
+		$vbulletin->GPC['jabber'] = htmlspecialchars_uni($vbulletin->GPC['jabber']);
+	}
+	else
+	{
+		standard_error(fetch_error('badjabber'));
+	}
+$userdata->set('jabber', $vbulletin->GPC['jabber']);]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>Jabber Integration Popup</title>
+			<hookname>sendmessage_start</hookname>
+			<phpcode><![CDATA[if ($_GET['do'] == 'im' AND $_GET['type'] == 'jabber') {
+$vbulletin->input->clean_array_gpc('r', array(
+		'do'		=> TYPE_NOHTML,
+		'type'		=> TYPE_NOHTML,
+		'userid'	=> TYPE_UINT
+	));
+if(!$vbulletin->userinfo['userid'] AND !$vbulletin->options['jabber_canguestsendmessage']) unset($vbulletin->options['jabber_sendmessageform']);
+if(!$vbulletin->userinfo['userid'] AND $vbulletin->options['jabber_show_guest'] == 0) print_no_permission();
+// Verify UserId
+$userinfo = verify_id('user', $vbulletin->GPC['userid'], 1, 1, 15);
+$templater = vB_Template::create("im_send_jabber");
+$templater->register('userinfo', $userinfo);
+$imtext = $templater->render();
+
+$templater = vB_Template::create('im_message');
+		$templater->register('headinclude', $headinclude);
+		$templater->register('imtext', $imtext);
+		$templater->register('typetext', $typetext);
+		$templater->register('userinfo', $userinfo);
+	print_output($templater->render());
+}
+
+if ($_POST['do'] == 'sendjabbermessage') {
+if(!$vbulletin->userinfo['userid'] AND !$vbulletin->options['jabber_canguestsendmessage']) print_no_permission();
+if(!$vbulletin->userinfo['userid'] AND $vbulletin->options['jabber_show_guest'] == 0) print_no_permission();
+require_once(DIR. '/includes/jabber_classes.php');
+$vbulletin->input->clean_array_gpc('r', array(
+		'body'		=> TYPE_STR,
+		'to'		=> TYPE_STR,
+		'from'		=> TYPE_STR,
+		'fromemail'	=> TYPE_STR,
+		'jabbertab'	=> TYPE_STR,
+		'userid'	=> TYPE_UINT,
+		'uid'		=> TYPE_INT
+	));
+
+        $jabber_message = $vbulletin->GPC['body'];
+        $jabber_from = $vbulletin->GPC['from'];
+        $jabber_to = $vbulletin->GPC['to'];
+        $emailaddress = $vbulletin->GPC['fromemail'];
+        // For compatibility reasons with older language packs, will remove later
+        $emailadress = $emailaddress;
+        $uid = $vbulletin->GPC['uid'];
+
+	eval(fetch_email_phrases('sendjabbermessage'));
+
+	require_once(DIR. '/includes/start.jabber.php');
+        if($vbulletin->options['jabber_selectcharset'] == 1) {
+           $message = utf8_encode($message);
+           $subject = utf8_encode($subject);
+}
+	$jabber_class->message($vbulletin->GPC['to'], $message, "chat", $subject);
+	$jabber_class->disconnect();
+	//if($vbulletin->GPC['jabbertab'] == "yes") eval('print_output("' . fetch_template('im_send_jabber_complete_2') . '");');
+	//else eval('print_output("' . fetch_template('im_send_jabber_complete') . '");');
+$templater = vB_Template::create("im_send_jabber_complete");
+$templater->register('userinfo', $userinfo);
+$imtext = $templater->render();
+
+$templater = vB_Template::create('im_message');
+		$templater->register('headinclude', $headinclude);
+		$templater->register('imtext', $imtext);
+		$templater->register('typetext', $typetext);
+		$templater->register('userinfo', $userinfo);
+	print_output($templater->render());
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="1">
+			<title>Edit Jabber IM Field in Admin CP</title>
+			<hookname>useradmin_edit_column1</hookname>
+			<phpcode><![CDATA[print_input_row($vbphrase['jabber_id'], 'user[jabber]', $user['jabber'], 0);]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>Add Jabber Integration to valid Fields in User Data Manager</title>
+			<hookname>userdata_start</hookname>
+			<phpcode><![CDATA[$this->validfields['jabber'] = array(TYPE_STR);]]></phpcode>
+		</plugin>
+	</plugins>
+	<phrases>
+				<phrasetype name="Control Panel Options" fieldname="cpoption">
+			<phrase name="jabber_nosecurity" date="1197910778" username="Sebijk" version="1.01"><![CDATA[No Encryption]]></phrase>
+			<phrase name="jabber_ssl" date="1197910871" username="Sebijk" version="1.01"><![CDATA[Use SSL]]></phrase>
+			<phrase name="jabber_tabdisabled" date="1221866738" username="Sebijk" version="1.23 Beta 1"><![CDATA[Disabled]]></phrase>
+			<phrase name="jabber_tabfirst" date="1210705504" username="Sebijk" version="1.22 Beta 3"><![CDATA[Left]]></phrase>
+			<phrase name="jabber_tablast" date="1210705529" username="Sebijk" version="1.22 Beta 3"><![CDATA[Right]]></phrase>
+			<phrase name="jabber_tls" date="1197910906" username="Sebijk" version="1.01"><![CDATA[Use TLS]]></phrase>
+			<phrase name="jabber_class_floele" date="1224100608" username="Sebijk" version="1.23 Beta 4"><![CDATA[floele]]></phrase>
+			<phrase name="jabber_class_xmpphp" date="1224100608" username="Sebijk" version="1.23 Beta 4"><![CDATA[xmpphp]]></phrase>
+			<phrase name="jabber_iso_8859_1" date="1224790373" username="Sebijk" version="1.23 Beta 6"><![CDATA[ISO-8859-1]]></phrase>
+			<phrase name="jabber_utf_8" date="1224790304" username="Sebijk" version="1.23 Beta 6"><![CDATA[UTF-8]]></phrase>
+		</phrasetype>
+		<phrasetype name="Kontrollzentrum: Benutzer-Verwaltung" fieldname="cpuser">
+			<phrase name="display_jabber_id" date="1210634705" username="Sebijk" version="1.22 Beta 1"><![CDATA[Display Jabber ID]]></phrase>
+			<phrase name="jabber_id" date="1210634705" username="Sebijk" version="1.22 Beta 1"><![CDATA[Jabber ID]]></phrase>
+		</phrasetype>
+		<phrasetype name="Scheduled Tasks" fieldname="cron">
+			<phrase name="task_jabber_birthday_desc" date="1197911346" username="Sebijk" version="1.01"><![CDATA[Sending Birthday wishes via Jabber to users birthday.]]></phrase>
+			<phrase name="task_jabber_birthday_log" date="1197911346" username="Sebijk" version="1.01"><![CDATA[Sent Birthday wishes to: {1}]]></phrase>
+			<phrase name="task_jabber_birthday_title" date="1197911346" username="Sebijk" version="1.01"><![CDATA[Birthday via Jabber]]></phrase>
+			<phrase name="task_jabber_digestdaily_desc" date="1224792953" username="Sebijk" version="1.23 Beta 6"><![CDATA[This script sends out new post and new thread digests once per day via Jabber.]]></phrase>
+			<phrase name="task_jabber_digestdaily_log" date="1224792953" username="Sebijk" version="1.23 Beta 6"><![CDATA[Daily Digest Sent via Jabber]]></phrase>
+			<phrase name="task_jabber_digestdaily_title" date="1224792953" username="Sebijk" version="1.23 Beta 6"><![CDATA[Daily Digest (Jabber)]]></phrase>
+			<phrase name="task_jabber_digestweekly_desc" date="1224756252" username="Sebijk" version="1.23 Beta 6"><![CDATA[This script sends out new post and new thread digests once per week via Jabber.]]></phrase>
+			<phrase name="task_jabber_digestweekly_log" date="1224756252" username="Sebijk" version="1.23 Beta 6"><![CDATA[Weekly Digest Sent via Jabber]]></phrase>
+			<phrase name="task_jabber_digestweekly_title" date="1224756252" username="Sebijk" version="1.23 Beta 6"><![CDATA[Weekly Digest (Jabber)]]></phrase>
+			<phrase name="task_jabber_reminder_desc" date="1198749538" username="Sebijk" version="1.20 Beta 3"><![CDATA[This script will send reminders via Jabber every 30 minutes of Calendar Events.]]></phrase>
+			<phrase name="task_jabber_reminder_log" date="1198749538" username="Sebijk" version="1.20 Beta 3"><![CDATA[Reminder (via Jabber) sent to: {1}]]></phrase>
+			<phrase name="task_jabber_reminder_title" date="1198749538" username="Sebijk" version="1.20 Beta 3"><![CDATA[Calendar Reminder (Jabber)]]></phrase>
+			<phrase name="task_jabber_subscriptions_desc" date="1210614966" username="Sebijk" version="1.22 Beta 1"><![CDATA[Once per day, this script sends out reminders about soon to expire subscriptions via Jabber.]]></phrase>
+			<phrase name="task_jabber_subscriptions_log" date="1210614966" username="Sebijk" version="1.22 Beta 1"><![CDATA[Paid Subscriptions Reminders via Jabber sent]]></phrase>
+			<phrase name="task_jabber_subscriptions_title" date="1210614966" username="Sebijk" version="1.22 Beta 1"><![CDATA[Jabber Subscriptions]]></phrase>
+		</phrasetype>
+		<phrasetype name="E-Mail: Text" fieldname="emailbody">
+			<phrase name="sendjabbermessage" date="1221939271" username="Sebijk" version="1.23 Beta 2"><![CDATA[Hello $jabber_to,
+
+$jabber_from sent you a message via the Jabber Form:
+************
+$jabber_message
+************
+
+E-Mail-Address of $jabber_from: $emailaddress
+
+$vboptions[bbtitle] cannot be held responsible for the content of the message, that users have sent via the Forum.
+
+Yours sincerely
+
+$vboptions[bbtitle]]]></phrase>
+		</phrasetype>
+		<phrasetype name="E-Mail: Betreff" fieldname="emailsubject">
+			<phrase name="sendjabbermessage" date="1224791050" username="Sebijk" version="1.23 Beta 6"><![CDATA[You have received a Message from $jabber_from]]></phrase>
+		</phrasetype>
+		<phrasetype name="Fehlermeldungen" fieldname="error">
+			<phrase name="badjabber" date="1221919672" username="Sebijk" version="1.23 Beta 2"><![CDATA[You entered an invalid Jabber ID. Please correct this.<p /> <a href="profile.php?do=editprofile">Go Back</a>]]></phrase>
+		</phrasetype>
+		<phrasetype name="GLOBAL" fieldname="global">
+			<phrase name="jabber_message_was_sent" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Your Jabber Message was sent.]]></phrase>
+			<phrase name="send_jabber_message_to_x" date="1210689455" username="Sebijk" version="1.22 Beta 3"><![CDATA[Send a Jabber message to {1}]]></phrase>
+			<phrase name="send_message_via_jabber_to_x" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Send Message via Jabber to {1}]]></phrase>
+		</phrasetype>
+		<phrasetype name="Messaging" fieldname="messaging">
+			<phrase name="jabber" date="0" username="" version=""><![CDATA[Jabber]]></phrase>
+			<phrase name="more_functions_via_jabber_client" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[More Jabber Functions via Jabber Client:]]></phrase>
+			<phrase name="search_servicediscovery_from_x" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Search Service Discovery from {1}]]></phrase>
+			<phrase name="send_message_via_jabber_to_x_link" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Send Message via Jabber to <a href="{1}" target="_blank"><strong>{2}</strong></a>]]></phrase>
+			<phrase name="send_xmpp_file_to_user_x" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Send a File to {1}]]></phrase>
+			<phrase name="send_xmpp_message_to_user_x" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Sending a Message to {1}]]></phrase>
+			<phrase name="show_adhoc_commands_for_x" date="1210634636" username="Sebijk" version="1.22 Beta 1"><![CDATA[Show Ad-Hoc Commands for {1}]]></phrase>
+			<phrase name="show_xmpp_user_x_infos" date="1210634651" username="Sebijk" version="1.22 Beta 1"><![CDATA[Show Profile Informations from {1}]]></phrase>
+			<phrase name="these_functions_require_jabber" date="1223997019" username="Sebijk" version="1.23 Beta 3"><![CDATA[Please note that these functions require that you actually have a <a href="http://www.jabber.org/web/Clients">Jabber client</a> application installed on your computer.]]></phrase>
+		</phrasetype>
+		<phrasetype name="Benutzer-Tools (global)" fieldname="user">
+			<phrase name="jabber_id" date="0" username="" version=""><![CDATA[Jabber ID]]></phrase>
+		</phrasetype>
+		<phrasetype name="vBulletin-Einstellungen" fieldname="vbsettings">
+			<phrase name="setting_jabber_canguestsendmessage_desc" date="1210628804" username="Sebijk" version="1.22 Beta 1"><![CDATA[If you want to prevent Guests from sending Jabber Messages, then you should disable this. This function requires, that Jabber Messages are enabled on the Forum.]]></phrase>
+			<phrase name="setting_jabber_canguestsendmessage_title" date="1210628804" username="Sebijk" version="1.22 Beta 1"><![CDATA[Allow Guests to send Jabber Messages:]]></phrase>
+			<phrase name="setting_jabber_encryption_desc" date="1218567730" username="Sebijk" version="1.22 Beta 4"><![CDATA[Should an encrypted connection to the Jabber Server be used? To use this option, you need to have a compiled PHP with <b>OpenSSL Support</b>, otherwise you can't use this function.]]></phrase>
+			<phrase name="setting_jabber_encryption_title" date="1218567730" username="Sebijk" version="1.22 Beta 4"><![CDATA[Secure connection:]]></phrase>
+			<phrase name="setting_jabber_hostname_desc" date="1197910472" username="Sebijk" version="1.01"><![CDATA[Please enter your Jabber Server Hostname.]]></phrase>
+			<phrase name="setting_jabber_hostname_title" date="1197910472" username="Sebijk" version="1.01"><![CDATA[Hostname:]]></phrase>
+			<phrase name="setting_jabber_jid_desc" date="1197910452" username="Sebijk" version="1.01"><![CDATA[Please enter your full Jabber ID here (ex. username@example.com):]]></phrase>
+			<phrase name="setting_jabber_jid_title" date="1197910452" username="Sebijk" version="1.01"><![CDATA[Jabber ID:]]></phrase>
+			<phrase name="setting_jabber_newpmnotification_desc" date="1224790540" username="Sebijk" version="1.23 Beta 6"><![CDATA[Should users be notified of new Private Messages via Jabber? (Only if they are accept Private Messages Notification via E-Mail.).]]></phrase>
+      <phrase name="setting_jabber_newpmnotification_title" date="1224790540" username="Sebijk" version="1.23 Beta 6"><![CDATA[Notify of new Private Messages via Jabber:]]></phrase>
+			<phrase name="setting_jabber_newpostnotification_desc" date="1218572131" username="Sebijk" version="1.22 Beta 4"><![CDATA[Should users be notified of new posts via Jabber? (Only if they are subscribed to a board or thread.).]]></phrase>
+			<phrase name="setting_jabber_newpostnotification_title" date="1218572131" username="Sebijk" version="1.22 Beta 4"><![CDATA[Notify of new posts via Jabber:]]></phrase>
+			<phrase name="setting_jabber_password_desc" date="1197910421" username="Sebijk" version="1.01"><![CDATA[Please enter your Jabber ID password:]]></phrase>
+			<phrase name="setting_jabber_password_title" date="1197910421" username="Sebijk" version="1.01"><![CDATA[Jabber Password:]]></phrase>
+			<phrase name="setting_jabber_port_desc" date="1218567685" username="Sebijk" version="1.22 Beta 4"><![CDATA[Please enter your Jabber Server Port. By default this is 5222.]]></phrase>
+			<phrase name="setting_jabber_port_title" date="1218567685" username="Sebijk" version="1.22 Beta 4"><![CDATA[Port Number:]]></phrase>
+			<phrase name="setting_jabber_selectcharset_desc" date="1224788159" username="Sebijk" version="1.23 Beta 5"><![CDATA[What Charset is your Forum running? This is important for sending Jabber Messages with special characters.]]></phrase>
+      <phrase name="setting_jabber_selectcharset_title" date="1224788159" username="Sebijk" version="1.23 Beta 5"><![CDATA[Choose Charset:]]></phrase>
+			<phrase name="setting_jabber_selectclass_desc" date="1218567787" username="Sebijk" version="1.22 Beta 4"><![CDATA[Here you can select the Jabber Class. If you use PHP 4 than select the Class from floele. If you use PHP 5 (64 bit must PHP 5.2.6), than select the xmpphp Class. Because it has more functions and is currently better. <b>Note: PHP 5 is needed for xmpphp.</b>]]></phrase>
+			<phrase name="setting_jabber_selectclass_title" date="1218567787" username="Sebijk" version="1.22 Beta 4"><![CDATA[Jabber Class Select:]]></phrase>
+			<phrase name="setting_jabber_sendmessageform_desc" date="1197911142" username="Sebijk" version="1.01"><![CDATA[May users send Jabber Messages directly via the Forum?]]></phrase>
+			<phrase name="setting_jabber_sendmessageform_title" date="1197911142" username="Sebijk" version="1.01"><![CDATA[Jabber Messages:]]></phrase>
+      <phrase name="setting_jabber_show_guest_desc" date="1224787200" username="Sebijk" version="1.23 Beta 5"><![CDATA[Do you want display the Jabber ID for Guests?<br /><b>ATTENTION: The Jabber ID will generally not show for Guests, if you disable Show User Profiles for Guests.</b>]]></phrase>
+			<phrase name="setting_jabber_show_guest_title" date="1224787200" username="Sebijk" version="1.23 Beta 5"><![CDATA[Show Jabber ID for Guests:]]></phrase>
+			<phrase name="setting_jabber_tabsorder_desc" date="1221866517" username="Sebijk" version="1.23 Beta 1"><![CDATA[Left or Right?]]></phrase>
+			<phrase name="setting_jabber_tabsorder_title" date="1221866517" username="Sebijk" version="1.23 Beta 1"><![CDATA[Jabber Tab:]]></phrase>
+			<phrase name="settinggroup_jabber_options" date="1210634469" username="Sebijk" version="1.22 Beta 1"><![CDATA[Jabber Options]]></phrase>
+		</phrasetype>
+		<phrasetype name="Wer ist online" fieldname="wol">
+			<phrase name="sending_jabber_message" date="1221939422" username="Sebijk" version="1.23 Beta 2"><![CDATA[Sending Jabber Message]]></phrase>
+		</phrasetype>
+	</phrases>
+	<options>
+		<settinggroup name="jabber_options" displayorder="65535">
+			<setting varname="jabber_hostname" displayorder="10">
+				<datatype>free</datatype>
+				<defaultvalue>localhost</defaultvalue>
+			</setting>
+			<setting varname="jabber_jid" displayorder="20">
+				<datatype>free</datatype>
+			</setting>
+			<setting varname="jabber_password" displayorder="30">
+				<datatype>free</datatype>
+			</setting>
+			<setting varname="jabber_port" displayorder="40">
+				<datatype>number</datatype>
+				<defaultvalue>5222</defaultvalue>
+			</setting>
+			<setting varname="jabber_encryption" displayorder="50">
+				<datatype>free</datatype>
+				<optioncode>radio:piped
+0|jabber_nosecurity
+1|jabber_ssl
+2|jabber_tls</optioncode>
+				<defaultvalue>0</defaultvalue>
+			</setting>
+			<setting varname="jabber_sendmessageform" displayorder="60">
+				<datatype>free</datatype>
+				<optioncode>yesno</optioncode>
+				<defaultvalue>no</defaultvalue>
+			</setting>
+			<setting varname="jabber_newpostnotification" displayorder="70">
+				<datatype>free</datatype>
+				<optioncode>yesno</optioncode>
+				<defaultvalue>no</defaultvalue>
+			</setting>
+			<setting varname="jabber_canguestsendmessage" displayorder="80">
+				<datatype>free</datatype>
+				<optioncode>yesno</optioncode>
+				<defaultvalue>0</defaultvalue>
+			</setting>
+			<setting varname="jabber_tabsorder" displayorder="90">
+				<datatype>free</datatype>
+				<optioncode>radio:piped
+0|jabber_tabfirst
+1|jabber_tablast
+2|jabber_tabdisabled</optioncode>
+				<defaultvalue>0</defaultvalue>
+			</setting>
+			<setting varname="jabber_selectcharset" displayorder="110">
+				<datatype>free</datatype>
+				<optioncode>radio:piped
+0|jabber_utf_8
+1|jabber_iso_8859_1</optioncode>
+				<defaultvalue>1</defaultvalue>
+			</setting>
+			<setting varname="jabber_show_guest" displayorder="120">
+				<datatype>free</datatype>
+				<optioncode>yesno</optioncode>
+				<defaultvalue>no</defaultvalue>
+			</setting>
+			<setting varname="jabber_newpmnotification" displayorder="130">
+				<datatype>free</datatype>
+				<optioncode>yesno</optioncode>
+				<defaultvalue>no</defaultvalue>
+			</setting>
+		</settinggroup>
+	</options>
+	<helptopics>
+	</helptopics>
+	<cronentries>
+		<cron varname="jabber_birthday" active="1" loglevel="1">
+			<filename>./includes/cron/jabber_birthday.php</filename>
+			<scheduling weekday="-1" day="-1" hour="0" minute="1" />
+		</cron>
+		<cron varname="jabber_digestdaily" active="1" loglevel="1">
+			<filename>./includes/cron/jabber_digestdaily.php</filename>
+			<scheduling weekday="-1" day="-1" hour="0" minute="2" />
+		</cron>
+		<cron varname="jabber_digestweekly" active="1" loglevel="1">
+			<filename>./includes/cron/jabber_digestweekly.php</filename>
+			<scheduling weekday="1" day="-1" hour="0" minute="30" />
+		</cron>
+		<cron varname="jabber_reminder" active="1" loglevel="0">
+			<filename>./includes/cron/jabber_reminder.php</filename>
+			<scheduling weekday="-1" day="-1" hour="-1" minute="25,55" />
+		</cron>
+		<cron varname="jabber_subscriptions" active="1" loglevel="1">
+			<filename>./includes/cron/jabber_subscriptions.php</filename>
+			<scheduling weekday="-1" day="-1" hour="0" minute="2" />
+		</cron>
+	</cronentries>
+	<faqentries>
+	</faqentries>
+	<navigation>
+	</navigation>
+</product>

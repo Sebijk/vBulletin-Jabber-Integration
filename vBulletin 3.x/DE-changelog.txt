@@ -1,0 +1,159 @@
+Änderungen:
+
+Version 1.23 RC 4:
+
+* PHP 5.3-Kompatibilitätsproblem mit xmpphp behoben
+* Bugfixes von Charles_1 enthalten (Danke an Charles_1)
+
+Version 1.23 RC 3:
+
+* PHP 5.3-Kompatibilitätsproblem behoben (vBulletin)
+* xmpphp-Klasse aktualisiert (SVN Rev 77)
+
+Version 1.23 RC 2:
+
+* Jabber PN-Benachrichtigung wird automatisch deaktiviert, wenn Vossis PM-Autoresponder 
+  installiert ist (Ich arbeite gerade an eine Fehlerbehebung)
+* Template-Modifikationen reduziert, nur noch 2 Template-Änderungen sind erforderlich, 
+  wenn TMS nicht installiert ist.
+* xmpphp-Klasse aktualisiert (SVN Rev 76)
+
+Version 1.23 RC 1:
+
+* Einige Template-Modifikationen (TMS) in Template-Hooks umgewandelt
+  (Danke an DragonMasterNYC für die Benutzung einiger Codestellen von ihm)
+* xmpphp-Klasse aktualisiert (SVN Rev 75)
+* Benachrichtigung über neue PNs via Jabber ist nun nicht mit der 
+  E-Mail-Benachrichtigung über neue PNs-Einstellung mehr abhängig
+  (nützlich, damit es nicht doppelt ankommt)
+* Automatische Weiterleitung, wenn eine Jabber-Nachricht übers Profil gesendet wurde
+
+Version 1.23 Beta 7:
+
+* xmpphp-Klasse aktualisiert (SVN Rev 73)
+* Ein Fehler unter functions_jabber_digest.php korrigiert (Danke an Hapi für den Hinweis)
+* Ein Fehler im Zusammenhang der UFP wurde behoben (Danke an Stoebi für den Hinweis)
+
+Version 1.23 Beta 6:
+
+* Vervollständigung der Benachrichtigungen über Jabber
+(Wöchentliche und Tägliche Benachrichtigung über neue Themen und Beiträge)
+* Jabber-Feld ist nun im Admin-CP editierbar.
+* Benachrichtigung über neue PNs integriert (Beta!)
+* UTF-8 wird nicht mehr vorrausgesetzt (Danke an Stoebi)
+* Template: im_send_jabber_complete_2 wird nun gecacht (Danke an Stoebi)
+* Auto-Autorisierungseintragmenü entfernt (weil zurzeit nicht implementiert)
+* Sofortige Benachrichtigungen über neue Themen via Jabber verbessert
+* Option zum Verstecken der Jabber-ID für Gäste hinzugefügt
+
+Version 1.23 Beta 5:
+
+* Fehler in Jabber-Sendeformular als Popup korrigiert
+* Versionsüberprüfungs-URL hinzugefügt
+
+Version 1.23 Beta 4:
+
+* Einige $_REQUEST-Variabeln in $_GET und $_POST ersetzt
+* Teilen in externe PHP-Dateien ausgelagert (wegen einige Probleme mit PHP 4)
+* Link in Phrase these_functions_require_jabber aktualisiert (bzgl. Jabber-Clientliste)
+* Zwei Plugins in Hook sendmessage_start zusammengeführt
+* Jabber-Klasse von floele aktualisiert (Datei ist Teil vom Flyspray Project)
+* xmpphp-Klasse wieder auf den aktuellsten Stand gebracht (SVN Rev 60)
+
+Version 1.23 Beta 3:
+
+* Kleiner Fehler beim Jabber-Nachrichten senden korrigiert
+
+Version 1.23 Beta 2 Patchlevel 1:
+
+* Russische Übersetzung aktualisiert (Danke an zCarot)
+
+Version 1.23 Beta 2:
+
+* Option zum Ausschalten vom Jabber-Tab Feld hinzugefügt
+* Wer ist Online-Problem endlich behoben (Danke an Andreas)
+* Jabber wird nun auch unter Kontaktinformationen unter 3.7 angezeigt (Danke an Andreas)
+* Jabber ID-Überprüfung hinzugefügt (prüft nun auf eine gültige Jabber-ID im Benutzer-CP)
+* xmpphp-Klasse auf den aktuellsten Stand gebracht
+
+Version 1.23 Beta 1:
+
+* Einige Wörter in der Englischen Übersetzung korrigiert
+* Eine neue Klasse von http://code.google.com/p/xmpphp/
+  integriert. Dies erfordert PHP 5!
+
+Version 1.22 Beta 4 Patchlevel 2:
+
+* Russische Übersetzung hinzugefügt
+
+Version 1.22 Beta 4 Patchlevel 1:
+
+* Vollständige Englische Übersetzung
+
+Version 1.22 Beta 4:
+
+* Englische Version veröffentlicht
+* Man kann nun das Jabber Tabfeld nach vorne
+  oder nach hinten packen
+
+Version 1.22 Beta 3:
+
+* Upgradefunktion von älteren Jabber Integrations-Mods direkt integriert
+* Jabber-Nachricht im Profil (3.7) unter Nachricht senden-Menü integriert (Beta)
+* Jabber Tab Profil Template (3.7) überarbeitet
+
+Version 1.22 Beta 2:
+
+* Fehler beim Installationscode behoben (Danke am ConiKost für den Hinweis)
+
+Version 1.22 Beta 1:
+
+* Produkt trägt nun eine neue Produkt-ID. Hinweise beim Update im Beitrag beachten
+* Version ist nun mit vBulletin 3.7 kompatibel
+* Viele kleinere Fehler korrigiert
+* Benachrichtigung über neue Themen per Jabber kann man nun ein/ausschalten
+* CSRF-Schutz hinzugefügt
+* Benachrichtigung über Kostenpflichtige Abos per Jabber hinzugefügt
+* Man kann nun Jabber-Nachrichten senden für Gäste ein/ausschalten
+
+Version 1.20 Beta 4:
+
+* Alle gemeldete Fehlern von Beta 3 wurden korrigiert
+* Einstellung: Sichere Verbindung wird jetzt berücksichtigt
+* Man kann nun auch an Termine per Jabber erinnert werden
+* Benachrichtigung über neue Themen per Jabber integriert (Beta)
+
+Version 1.20 Beta 3
+
+* Wer ist online: Aufenthaltsort unbekannt Problem richtig korrigiert.
+* Wer ist online: Jabber-Symbol wird nun auch da angezeigt (Danke an xKai666x für den Hinweis)
+* Jabber Postbit: Popup-Fenster lässt sich nun öffnen (Danke an xKai666x für den Hinweis)
+* Produkt lässt sich jetzt komplett übersetzen
+
+Version 1.20 Beta 2
+
+* Kleinere Fehler korrigiert
+* Anleitung für Templates bearbeiten liegt dabei (nicht notwendig, wenn TMS installiert ist)
+
+Version 1.20 Beta 1
+
+* Jabber-Integration von Sebijk komplett überarbeitet
+* Man kann nun Jabber-Nachrichten über das Forum verschicken (sofern Logindaten für ein Jabber-Account im ACP eingetragen)
+* Jabber Web-Integration vollständig integriert (xmpp:-Links)
+* Wer ist online Plugin von Patria entfernt, weil dies die 'Wer ist online'-Liste komplett zerstört hat
+* Keine Template-Änderungen mehr erforderlich (sofern das TMS-Add-on installiert ist)
+* Benutzer, die Geburstag haben werden nun auch per Jabber gratuliert (sofern Logindaten für ein Jabber-Account im ACP eingetragen
+  und die JID von den Benutzer im Benutzer-CP selbst)
+* Neues Jabber-Symbol
+* Eine UTF-8 und eine ANSI-Version liegt bei.
+
+Patrias Mod:
+
+Version 1.01
+
+* Wer ist online - Aufenthaltsort unbekannt Problem behoben.
+* Postbit-Symbol ist nicht mehr für die Gäste sichtbar.
+
+Version 1.00
+
+* Erste Version

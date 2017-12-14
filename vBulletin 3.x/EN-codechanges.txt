@@ -1,0 +1,203 @@
+Enhanced Jabber Integration
+================================================================================
+Version: 1.23 RC 2
+URL: http://www.vbulletin-germany.org/showthread.php?t=1189
+
+All PHP Code Changes are optional, it is not required for running this Add-on:
+
+--------------------------------------------------------------------------------
+Inhalt:
+
+1. Improved Instant Notification about new Posts with Jabber
+2. Administrator Control Panel: Search User with a Jabber ID
+3. Improved Notification about new Private Messages
+--------------------------------------------------------------------------------
+
+1. Improved Instant Notification about new Posts with Jabber:
+
+includes/functions_newpost.php
+
+Search:
+--------------------------------------------------------------------------------
+    $vbulletin->userinfo['username'] = $temp;
+
+vbmail_end(); 
+--------------------------------------------------------------------------------
+
+Below that, insert the following Text:
+--------------------------------------------------------------------------------
+if($vbulletin->options['jabber_jid'] AND $vbulletin->options['jabber_password'] AND $vbulletin->options['jabber_port'] AND $vbulletin->options['jabber_hostname'] AND $vbulletin->options['jabber_newpostnotification']) $jabber_class->disconnect();
+--------------------------------------------------------------------------------
+
+The disconnect to Jabber Server is now faster.
+
+--------------------------------------------------------------------------------
+2. Administrator Control Panel: Search User with a Jabber ID:
+--------------------------------------------------------------------------------
+
+Jelsoft has not any Hooks added, who I can place a Field to search.
+
+admincp/user.php
+
+Search:
+--------------------------------------------------------------------------------
+$searchquery = "
+		SELECT
+		user.userid, reputation, username, usergroupid, birthday_search, email,
+		parentemail,(options & " . $vbulletin->bf_misc_useroptions['coppauser'] . ") AS coppauser, homepage, icq, aim, yahoo, msn, skype, signature,
+		usertitle, joindate, lastpost, posts, ipaddress, lastactivity, userfield.*
+		FROM " . TABLE_PREFIX . "user AS user
+		LEFT JOIN " . TABLE_PREFIX . "userfield AS userfield ON(userfield.userid = user.userid)
+		LEFT JOIN " . TABLE_PREFIX . "usertextfield AS usertextfield ON(usertextfield.userid = user.userid)
+		WHERE $condition
+		ORDER BY " . $db->escape_string($vbulletin->GPC['orderby']) . " " . $db->escape_string($vbulletin->GPC['direction']) . "
+		LIMIT " . $vbulletin->GPC['limitstart'] . ", " . $vbulletin->GPC['limitnumber']
+	;
+--------------------------------------------------------------------------------
+add near "skype,":
+--------------------------------------------------------------------------------
+ jabber,
+--------------------------------------------------------------------------------
+Next Search:
+--------------------------------------------------------------------------------
+print_yes_no_row($vbphrase['display_skype_name'], 'display[skype]', 0);
+--------------------------------------------------------------------------------
+Below that, insert the following Text:
+--------------------------------------------------------------------------------
+print_yes_no_row($vbphrase['display_jabber_id'], 'display[jabber]', 0);
+--------------------------------------------------------------------------------
+Next Search:
+--------------------------------------------------------------------------------
+    if ($vbulletin->GPC['display']['skype'])
+	{
+		$header[] = $vbphrase['skype_name'];
+	}
+--------------------------------------------------------------------------------
+Below that, insert the following Text:
+--------------------------------------------------------------------------------
+if ($vbulletin->GPC['display']['jabber'])
+	{
+		$header[] = $vbphrase['jabber_id'];
+	}
+--------------------------------------------------------------------------------
+Next Search:
+--------------------------------------------------------------------------------   
+	if ($vbulletin->GPC['display']['skype'])
+		{
+			$cell[] = $user['skype'];
+		}
+--------------------------------------------------------------------------------
+Below that, insert the following Text:
+--------------------------------------------------------------------------------
+if ($vbulletin->GPC['display']['jabber'])
+		{
+			$cell[] = $user['jabber'];
+		}
+--------------------------------------------------------------------------------
+Done!
+--------------------------------------------------------------------------------
+3. Improved Notification about new Private Messages
+--------------------------------------------------------------------------------
+Delete the Plugin New Notifications via PM.
+
+includes/class_dm_pm.php
+
+Search:
+--------------------------------------------------------------------------------
+	function post_save_each($doquery = true)
+	{
+		$pmtextid = ($this->existing['pmtextid'] ? $this->existing['pmtextid'] : $this->pmtext['pmtextid']);
+		$fromuserid = intval($this->fetch_field('fromuserid'));
+		$fromusername = $this->fetch_field('fromusername');
+		$parentpmid = intval($this->info['parentpmid']);
+
+		if (!$this->condition)
+		{
+			// save a copy in the sent items folder
+			if ($this->info['savecopy'])
+			{
+				/*insert query*/
+				$this->dbobject->query_write("INSERT INTO " . TABLE_PREFIX . "pm (pmtextid, userid, folderid, messageread, parentpmid) VALUES ($pmtextid, $fromuserid, -1, 1, $parentpmid)");
+
+				$user = fetch_userinfo($fromuserid);
+				$userdm =& datamanager_init('User', $this->registry, ERRTYPE_SILENT);
+				$userdm->set_existing($user);
+				$userdm->set('pmtotal', 'pmtotal + 1', false);
+				$userdm->save();
+				unset($userdm);
+			}
+
+			if (is_array($this->info['recipients']))
+			{
+				$receipt_sql = array();
+				$popupusers = array();
+				$warningusers = array();
+
+				require_once(DIR . '/includes/class_bbcode_alt.php');
+				$plaintext_parser =& new vB_BbCodeParser_PlainText($this->registry, fetch_tag_list());
+				$plaintext_title = unhtmlspecialchars($this->fetch_field('title'));
+--------------------------------------------------------------------------------
+Below that, insert the following Text:
+--------------------------------------------------------------------------------
+$is_vb_registry_mode = 1;
+
+require_once(DIR . '/includes/jabber_classes.php');
+require_once(DIR. '/includes/start.jabber.php'); // start Jabber Connection
+--------------------------------------------------------------------------------
+Next Search:
+--------------------------------------------------------------------------------
+					($hook = vBulletinHook::fetch_hook('pmdata_postsave_recipient')) ? eval($hook) : false;
+
+					if (($user['options'] & $this->registry->bf_misc_useroptions['emailonpm']) AND $user['usergroupid'] != 3 AND $user['usergroupid'] != 4)
+					{
+						$touserinfo =& $user;
+						$plaintext_parser->set_parsing_language($touserinfo['languageid']);
+						$plaintext_message = $plaintext_parser->parse($this->fetch_field('message'), 'privatemessage');
+
+						eval(fetch_email_phrases($email_phrases['pmreceived'], $touserinfo['languageid'], '', 'email'));
+						vbmail($touserinfo['email'], $emailsubject, $emailmessage);
+--------------------------------------------------------------------------------
+Below that, insert the following Text:
+--------------------------------------------------------------------------------
+						if($touserinfo['jabber']) {
+						    if($this->registry->options['jabber_selectcharset'] == 1) {
+ 						            $emailmessage = utf8_encode($emailmessage);
+   						            $emailsubject = utf8_encode($emailsubject);
+						    }
+						    if($this->registry->options['jabber_selectclass'] == 1) $jabber_class->message($touserinfo['jabber'], $emailmessage, "chat", $emailsubject); // xmpphp
+    						    else $jabber_class->send_message($touserinfo['jabber'], $emailmessage, $emailsubject); // legacy
+   						 }
+--------------------------------------------------------------------------------
+Next Search:
+--------------------------------------------------------------------------------
+           // email user about pm box nearly being full
+						$warningusers[] = $user['userid'];
+						$touserinfo =& $user;
+						eval(fetch_email_phrases($email_phrases['pmboxalmostfull'], $touserinfo['languageid'], '', 'email'));
+						vbmail($touserinfo['email'], $emailsubject, $emailmessage, true);
+					}
+				}
+--------------------------------------------------------------------------------
+Replace this:
+--------------------------------------------------------------------------------
+            // email user about pm box nearly being full
+						$warningusers[] = $user['userid'];
+						$touserinfo =& $user;
+						eval(fetch_email_phrases($email_phrases['pmboxalmostfull'], $touserinfo['languageid'], '', 'email'));
+						vbmail($touserinfo['email'], $emailsubject, $emailmessage, true);
+						if($touserinfo['jabber']) {
+						    if($this->registry->options['jabber_selectcharset'] == 1) {
+ 						            $emailmessage = utf8_encode($emailmessage);
+   						            $emailsubject = utf8_encode($emailsubject);
+						    }
+						    if($this->registry->options['jabber_selectclass'] == 1) $jabber_class->message($touserinfo['jabber'], $emailmessage, "chat", $emailsubject); // xmpphp
+    						    else $jabber_class->send_message($touserinfo['jabber'], $emailmessage, $emailsubject); // legacy
+   						 }
+            }
+          }
+        $jabber_class->disconnect();
+--------------------------------------------------------------------------------
+The Jabber Server and vBulletin now faster with Code Change. 
+Im missing many Hooks, so the Solution with only Plugins is very slower than this Code Change.
+
+Done!

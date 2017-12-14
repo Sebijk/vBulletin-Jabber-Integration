@@ -1,0 +1,16 @@
+Erweiterte Jabber-Integration
+================================================================================
+Version: 1.23 RC 4
+URL: http://www.vbulletin-germany.org/showthread.php?t=1189
+
+1. Laden Sie alle Dateien im Ordner upload in Ihren Forenverzeichnis hoch.
+2. Importieren Sie das Produkt DE-product-jabber_utf8.xml (für UTF-8), für ISO-8859-1
+   nehmen Sie das Produkt DE-product-jabber_ISO-8859-1.xml.
+   Wenn eine ältere Version gefunden wird, wird diese automatisch aktualisiert
+   (Seit Version 1.22 Beta 3)
+3. Erstellen Sie einen Jabber-Account, das für das Forum verwenden werden soll.
+4. Geben Sie die Daten des Jabber-Accounts unter Einstellungen -> Jabber-Optionen
+   ein.
+5. Wenn Sie kein TMS installiert haben, müssen Sie die Template-Änderungen unter
+   templateedits-enhanced_jabber.txt durchführen
+6. Fertig!

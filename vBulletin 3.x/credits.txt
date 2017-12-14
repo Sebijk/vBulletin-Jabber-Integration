@@ -1,0 +1,20 @@
+Thanks to:
+
+Jabber/xmpphp Class:
+Florian Schmitz (floele), Nathan Fritz (fritzy), Stephan Wentz, Michael Garvin
+Website: http://www.flyspray.org 
+and http://code.google.com/p/xmpphp
+
+English Translation: 
+Flosoft (http://www.jabberforum.org)
+
+Russian Translation: 
+zCarot
+
+For useful vBulletin Tips:
+Andreas Kirbach (vBulletin-Germany.org)
+
+for using some Code parts:
+DragonMasterNYC
+
+for Bugfixes: Charles_1, Stoebi
